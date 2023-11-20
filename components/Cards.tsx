@@ -6,9 +6,9 @@ const IMAGE_URL =
 const Cards = () => {
   return (
     <div className="my-10 lg:w-2/3 w-full mx-auto">
-      <p>Where you can help</p>
-      <h4 className="text-2xl font-medium mb-6 mt-2">Featured Topics</h4>
-      <div className="grid grid-cols-3 gap-4">
+      <p className="text-center">Where you can help</p>
+      <h4 className="text-2xl font-medium mb-6 mt-2 text-center">Featured Topics</h4>
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
         {Array(5)
           .fill()
           .map((item: any, i: number) => (
