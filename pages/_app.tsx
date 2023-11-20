@@ -19,21 +19,23 @@ export default function App({ Component, pageProps }: AppProps) {
   } else {
     return (
       <Providers pageProps={pageProps}>
-        <Header />
-        <Component {...pageProps} />
+        <div className="min-h-screen relative">
+          <Header />
+          <Component {...pageProps} />
 
-        <ToastContainer
-          position="bottom-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
+          <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
+        </div>
       </Providers>
     )
   }

@@ -5,7 +5,7 @@ import { MdSunnySnowing } from 'react-icons/md'
 
 const Header: React.FC = () => {
   return (
-    <header className='w-full fixed z-20 pt-5 px-5'>
+    <header className='w-full absolute z-20 pt-5 px-5'>
       <nav
         className="flex flex-wrap items-center justify-center lg:w-2/4 w-full
       px-2 py-3 shadow-md text-white mb-3 bg-white mx-auto rounded-full"

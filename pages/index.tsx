@@ -1,4 +1,5 @@
 import Banner from '@/components/Banner'
+import Cards from '@/components/Cards'
 import Head from 'next/head'
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       </Head>
 
       <Banner />
+      <Cards />
     </div>
   )
 }
