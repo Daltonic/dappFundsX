@@ -1,11 +1,14 @@
 import Details from '@/components/Details'
 import Donors from '@/components/Donors'
-import Footer from '@/components/Footer'
-import Header from '@/components/Header'
+import NavBtn from '@/components/NavBtn'
 import Payment from '@/components/Payment'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-export default function Home() {
+export default function Donation() {
+  const router = useRouter()
+  const { id } = router.query
+
   return (
     <div>
       <Head>
@@ -13,7 +16,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
       <div className="h-10"></div>
       <div className="h-10"></div>
       <div className="h-10"></div>
@@ -24,8 +26,8 @@ export default function Home() {
         <Details />
         <Payment />
       </div>
-      <Footer />
       <Donors />
+      <NavBtn donationId={Number(id)} />
     </div>
   )
 }

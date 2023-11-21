@@ -5,6 +5,8 @@ import '@rainbow-me/rainbowkit/styles.css'
 import { useEffect, useState } from 'react'
 import Providers from '@/services/provider'
 import type { AppProps } from 'next/app'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [showChild, setShowChild] = useState<boolean>(false)
@@ -19,8 +21,9 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
       <Providers pageProps={pageProps}>
         <div className="min-h-screen relative">
+          <Header />
           <Component {...pageProps} />
-
+          <Footer />
           <ToastContainer
             position="bottom-center"
             autoClose={5000}
