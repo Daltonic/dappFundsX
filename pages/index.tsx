@@ -3,9 +3,23 @@ import Cards from '@/components/Cards'
 import NavBtn from '@/components/NavBtn'
 import Quote from '@/components/Quote'
 import Start from '@/components/Start'
+import { globalActions } from '@/store/globalSlices'
+import { generateCharities } from '@/utils/fakeData'
+import { CharityStruct, RootState } from '@/utils/type.dt'
+import { NextPage } from 'next'
 import Head from 'next/head'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-export default function Home() {
+const Page: NextPage<{ charitiesData: CharityStruct[] }> = ({ charitiesData }) => {
+  const { charities } = useSelector((states: RootState) => states.globalStates)
+  const dispatch = useDispatch()
+  const { setCharities } = globalActions
+
+  useEffect(() => {
+    dispatch(setCharities(charitiesData))
+  }, [dispatch, setCharities, charitiesData])
+
   return (
     <div>
       <Head>
@@ -14,7 +28,7 @@ export default function Home() {
       </Head>
       <Banner />
       <div className="h-10"></div>
-      <Cards />
+      <Cards charities={charities} />
       <div className="h-10"></div>
       <Quote />
       <div className="h-10"></div>
@@ -23,4 +37,13 @@ export default function Home() {
       <NavBtn />
     </div>
   )
+}
+
+export default Page
+
+export const getServerSideProps = async () => {
+  const charitiesData: CharityStruct[] = generateCharities(5)
+  return {
+    props: { charitiesData: JSON.parse(JSON.stringify(charitiesData)) },
+  }
 }

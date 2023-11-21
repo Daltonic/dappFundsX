@@ -1,7 +1,9 @@
 import React from 'react'
 import Donation from './Donation'
+import { FaEthereum } from 'react-icons/fa'
+import { CharityStruct } from '@/utils/type.dt'
 
-const Payment: React.FC = () => {
+const Payment: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
   return (
     <div
       className="w-full md:w-1/3 shadow-lg shadow-gray-300 p-6
@@ -9,13 +11,16 @@ const Payment: React.FC = () => {
     >
       <div className="font-light">
         <div className="flex items-end space-x-2 mb-4">
-          <h4 className="text-4xl">$59,235</h4>
-          <span className="text-gray-600">raised of $100,000 target</span>
+          <h4 className="text-4xl flex justify-start items-center space-x-1">
+            <FaEthereum />
+            <span>{charity.raised.toFixed(2)}</span>
+          </h4>
+          <span className="text-gray-600">raised of {charity.amount.toFixed(2)} ETH target</span>
         </div>
 
         <div className="h-1 bg-green-600 rounded-full mb-2" />
 
-        <span className="text-gray-600">1.1k donations</span>
+        <span className="text-gray-600">{charity.donations} donations</span>
       </div>
 
       <div className="flex flex-col space-y-2 font-semibold">
