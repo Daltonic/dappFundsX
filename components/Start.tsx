@@ -8,8 +8,7 @@ const Start: React.FC = () => {
       <div className="flex flex-col lg:flex-row justify-start items-center space-x-0 lg:space-x-4">
         <div
           className="w-full lg:w-80 flex flex-col border-2 border-transparent
-          justify-center items-start space-y-2 rounded-lg hover:border-green-600
-          transition-all duration-300 ease-in-out cursor-pointer"
+          justify-center items-center space-y-2 sm:items-start"
         >
           <h4 className="font-medium text-gray-800">Make a difference</h4>
           <h1 className="text-4xl font-medium">

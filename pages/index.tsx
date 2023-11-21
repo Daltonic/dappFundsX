@@ -14,7 +14,9 @@ export default function Home() {
       </Head>
 
       <Banner />
+      <div className="h-10"></div>
       <Cards />
+      <div className="h-10"></div>
       <Quote />
       <div className="h-10"></div>
       <Start />
