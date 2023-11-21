@@ -1,6 +1,5 @@
 import React from 'react'
-import { BiDonateHeart } from 'react-icons/bi'
-import { BsDot } from 'react-icons/bs'
+import Donation from './Donation'
 
 const Payment: React.FC = () => {
   return (
@@ -35,26 +34,6 @@ const Payment: React.FC = () => {
       <div className="flex justify-start items-center space-x-4">
         <button className="border border-gray-300 py-2 px-4 rounded-lg font-medium">See all</button>
         <button className="border border-gray-300 py-2 px-4 rounded-lg font-medium">See top donations</button>
-      </div>
-    </div>
-  )
-}
-
-const Donation: React.FC = () => {
-  return (
-    <div className="flex justify-start items-start space-x-4">
-      <div className="bg-gray-200 rounded-full p-2">
-        <BiDonateHeart size={23} />
-      </div>
-
-      <div className="flex flex-col">
-        <p className="font-semibold">Richard Diedo</p>
-
-        <div className="flex justify-start items-center">
-          <span>$10</span>
-          <BsDot size={30} className="text-gray-300" />
-          <span className="text-gray-500">25 d</span>
-        </div>
       </div>
     </div>
   )
