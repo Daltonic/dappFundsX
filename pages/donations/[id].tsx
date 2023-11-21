@@ -1,3 +1,4 @@
+import Delete from '@/components/Delete'
 import Details from '@/components/Details'
 import Donors from '@/components/Donors'
 import NavBtn from '@/components/NavBtn'
@@ -27,6 +28,7 @@ export default function Donation() {
         <Payment />
       </div>
       <Donors />
+      <Delete />
       <NavBtn donationId={Number(id)} />
     </div>
   )

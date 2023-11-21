@@ -19,8 +19,20 @@ const Payment: React.FC = () => {
       </div>
 
       <div className="flex flex-col space-y-2 font-semibold">
-        <button className="bg-amber-400 py-3 px-20 rounded-xl">Share</button>
-        <button className="bg-amber-500 py-3 px-20 rounded-xl">Donate now</button>
+        <button
+          className="bg-amber-500 py-3 px-20 rounded-xl
+          transition-all duration-300 ease-in-out
+          hover:bg-amber-600"
+        >
+          Share
+        </button>
+        <button
+          className="bg-amber-500 py-3 px-20 rounded-xl
+          transition-all duration-300 ease-in-out
+          hover:bg-amber-400"
+        >
+          Donate now
+        </button>
       </div>
 
       <div className="flex flex-col space-y-10">
@@ -33,7 +45,9 @@ const Payment: React.FC = () => {
 
       <div className="flex justify-start items-center space-x-4">
         <button className="border border-gray-300 py-2 px-4 rounded-lg font-medium">See all</button>
-        <button className="border border-gray-300 py-2 px-4 rounded-lg font-medium">See top donations</button>
+        <button className="border border-gray-300 py-2 px-4 rounded-lg font-medium">
+          See top donations
+        </button>
       </div>
     </div>
   )
