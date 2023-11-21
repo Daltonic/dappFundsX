@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import { MdChevronRight } from 'react-icons/md'
 
@@ -12,26 +13,33 @@ const Cards = () => {
         {Array(5)
           .fill()
           .map((item: any, i: number) => (
-            <Card key={i} />
+            <Card key={i} donationId={i} />
           ))}
       </div>
     </div>
   )
 }
 
-const Card = () => {
+const Card: React.FC<{ donationId: number }> = ({ donationId }) => {
   return (
     <div className="shadow flex flex-col w-96 bg-gray-50 rounded-lg overflow-hidden">
       <img src={IMAGE_URL} alt="hello" />
       <div className="p-5 space-y-8">
-        <h4 className="text-xl font-medium">Help after UK storms</h4>
-        <button
+        <div>
+          <h4 className="text-xl font-medium mb-1">Help after UK storms</h4>
+          <p className="text-gray-500 font-bold text-sm flex justify-start items-center space-x-2">
+            <span>$3,568 raised</span>
+            <span>45 donations</span>
+          </p>
+        </div>
+        <Link
           className="flex justify-start items-center space-x-2
         transition-all duration-300 ease-in-out hover:pl-5"
+          href={'/donations/' + donationId}
         >
           <span>Donate now</span>
           <MdChevronRight />
-        </button>
+        </Link>
       </div>
     </div>
   )
