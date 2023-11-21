@@ -15,8 +15,9 @@ export default function Home() {
       <Header />
       <div className="h-10"></div>
       <div className="h-10"></div>
+      <div className="h-10"></div>
       <div className="flex flex-col sm:flex-row sm:justify-between items-start
-      lg:w-2/3 w-full mx-auto space-y-4 sm:space-y-0 sm:space-x-4 my-10 px-8 sm:px-0">
+      lg:w-2/3 w-full mx-auto space-y-4 sm:space-y-0 sm:space-x-10 my-10 px-8 sm:px-0">
         <Details />
         <Payment />
       </div>
