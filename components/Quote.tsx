@@ -17,15 +17,17 @@ const Quote = () => {
           worldwide for over a decade. Don’t worry about a thing, we’ve got it covered.
         </p>
 
-        <Link
-          href={'/donations/create'}
-          className="bg-white text-green-600 px-4 space-x-1 w-full sm:w-1/6
-        flex justify-center items-center rounded-full text-center py-3
-        transition duration-300 ease-in-out hover:bg-green-600 hover:text-white"
-        >
-          <MdChevronRight size={25} />
-          <span>Start a Dapp Fund</span>
-        </Link>
+        <div className='flex'>
+          <Link
+            href={'/donations/create'}
+            className="bg-white text-green-600 px-4 space-x-1
+            flex justify-center items-center rounded-full text-center py-3
+            transition duration-300 ease-in-out hover:bg-green-600 hover:text-white"
+          >
+            <MdChevronRight size={25} />
+            <span>Start a Dapp Fund</span>
+          </Link>
+        </div>
       </div>
     </div>
   )
