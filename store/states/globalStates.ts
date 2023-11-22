@@ -6,4 +6,5 @@ export const globalStates: GlobalState = {
   supports: [],
   deleteModal: 'scale-0',
   donorsModal: 'scale-0',
+  supportModal: 'scale-0',
 }

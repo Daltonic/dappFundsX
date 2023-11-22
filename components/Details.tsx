@@ -39,14 +39,26 @@ const Details: React.FC<ComponentProp> = ({ charity, supports }) => {
 
       <p>{charity?.description}</p>
       <div className="flex justify-start items-center space-x-4">
-        <button className="border border-gray-300 py-3 px-20 rounded-lg">Donate</button>
-        <button className="border border-gray-300 py-3 px-20 rounded-lg">Share</button>
+        <button
+          className="border border-gray-300 py-3 px-20 rounded-lg
+          transition-all duration-300 ease-in-out
+         hover:bg-gray-100"
+        >
+          Donate
+        </button>
+        <button
+          className="border border-gray-300 py-3 px-20 rounded-lg
+          transition-all duration-300 ease-in-out
+         hover:bg-gray-100"
+        >
+          Share
+        </button>
       </div>
 
       <hr className="border-t border-gray-300" />
 
       <div>
-        <h4 className="font-semibold text-lg mb-1">Words of support (43)</h4>
+        <h4 className="font-semibold text-lg mb-1">Words of support ({supports.length})</h4>
         <p className="mb-4 text-gray-600">Please donate to share words of support.</p>
 
         <div className="flex flex-col space-y-10">

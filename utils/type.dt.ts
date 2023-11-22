@@ -35,6 +35,7 @@ export interface GlobalState {
   supports: SupportStruct[]
   deleteModal: string
   donorsModal: string
+  supportModal: string
 }
 
 export interface RootState {

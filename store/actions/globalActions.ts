@@ -17,4 +17,7 @@ export const globalActions = {
   setDonorModal: (state: GlobalState, action: PayloadAction<string>) => {
     state.donorsModal = action.payload
   },
+  setSupportModal: (state: GlobalState, action: PayloadAction<string>) => {
+    state.supportModal = action.payload
+  },
 }

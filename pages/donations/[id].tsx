@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Donor from '@/components/Donor'
 
 interface PageProps {
   charityData: CharityStruct
@@ -40,6 +41,7 @@ const Page: NextPage<PageProps> = ({ charityData, supportsData }) => {
       <div className="h-10"></div>
       <div className="h-10"></div>
       <div className="h-10"></div>
+
       {charity && (
         <div
           className="flex flex-col sm:flex-row sm:justify-between items-start
@@ -49,8 +51,15 @@ const Page: NextPage<PageProps> = ({ charityData, supportsData }) => {
           <Payment supports={supports} charity={charity} />
         </div>
       )}
-      <Supports supports={supports} />
-      <Delete />
+
+      {charity && (
+        <>
+          <Delete charity={charity} />
+          <Donor charity={charity} />
+          <Supports supports={supports} />
+        </>
+      )}
+
       <NavBtn donationId={Number(id)} />
     </div>
   )

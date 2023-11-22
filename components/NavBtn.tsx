@@ -2,8 +2,13 @@ import React from 'react'
 import { HiChevronDown } from 'react-icons/hi'
 import { Menu } from '@headlessui/react'
 import Link from 'next/link'
+import { useDispatch } from 'react-redux'
+import { globalActions } from '@/store/globalSlices'
 
 const NavBtn: React.FC<{ donationId?: number }> = ({ donationId }) => {
+  const dispatch = useDispatch()
+  const { setDeleteModal } = globalActions
+
   const menuItems = [
     { href: '/', label: 'Home' },
     { href: '/donations/create', label: 'Create Charity' },
@@ -71,6 +76,7 @@ const NavBtn: React.FC<{ donationId?: number }> = ({ donationId }) => {
                         active ? 'text-white bg-red-600' : 'text-red-600'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm
                       hover:bg-red-600 hover:text-white`}
+                      onClick={() => dispatch(setDeleteModal('scale-100'))}
                     >
                       <span>Delete Charity</span>
                     </button>
