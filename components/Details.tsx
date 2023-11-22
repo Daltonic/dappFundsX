@@ -1,10 +1,15 @@
 import React from 'react'
 import { MdCheckCircle } from 'react-icons/md'
 import Donation from './Donation'
-import { CharityStruct } from '@/utils/type.dt'
+import { CharityStruct, SupportStruct } from '@/utils/type.dt'
 import Image from 'next/image'
 
-const Details: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
+interface ComponentProp {
+  charity: CharityStruct
+  supports: SupportStruct[]
+}
+
+const Details: React.FC<ComponentProp> = ({ charity, supports }) => {
   return (
     <div className="flex flex-col w-full md:w-2/3 space-y-6">
       <h4 className="text-4xl font-semibold capitalize">{charity?.name}</h4>
@@ -45,11 +50,9 @@ const Details: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
         <p className="mb-4 text-gray-600">Please donate to share words of support.</p>
 
         <div className="flex flex-col space-y-10">
-          {Array(5)
-            .fill()
-            .map((item: any, i: number) => (
-              <Donation comment={true} key={i} />
-            ))}
+          {supports.map((support: any, i: number) => (
+            <Donation comment support={support} key={i} />
+          ))}
         </div>
       </div>
     </div>

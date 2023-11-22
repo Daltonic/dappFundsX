@@ -1,9 +1,14 @@
 import React from 'react'
 import Donation from './Donation'
 import { FaEthereum } from 'react-icons/fa'
-import { CharityStruct } from '@/utils/type.dt'
+import { CharityStruct, SupportStruct } from '@/utils/type.dt'
 
-const Payment: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
+interface ComponentProp {
+  charity: CharityStruct
+  supports: SupportStruct[]
+}
+
+const Payment: React.FC<ComponentProp> = ({ charity, supports }) => {
   return (
     <div
       className="w-full md:w-1/3 shadow-lg shadow-gray-300 p-6
@@ -18,7 +23,12 @@ const Payment: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
           <span className="text-gray-600">raised of {charity.amount.toFixed(2)} ETH target</span>
         </div>
 
-        <div className="h-1 bg-green-600 rounded-full mb-2" />
+        <div className="h-1 bg-gray-300 rounded-full mb-2">
+          <div
+            className="h-full overflow-hidden bg-green-600"
+            style={{ width: `${(charity.raised / charity.amount) * 100}%` }}
+          />
+        </div>
 
         <span className="text-gray-600">{charity.donations} donations</span>
       </div>
@@ -41,11 +51,9 @@ const Payment: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
       </div>
 
       <div className="flex flex-col space-y-10">
-        {Array(4)
-          .fill()
-          .map((item: any, i: number) => (
-            <Donation key={i} />
-          ))}
+        {supports.map((support: any, i: number) => (
+          <Donation support={support} key={i} />
+        ))}
       </div>
 
       <div className="flex justify-start items-center space-x-4">

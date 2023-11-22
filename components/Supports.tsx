@@ -1,28 +1,27 @@
 import React from 'react'
 import { TfiClose } from 'react-icons/tfi'
 import Donation from './Donation'
+import { SupportStruct } from '@/utils/type.dt'
 
-const Donors: React.FC = () => {
+const Supports: React.FC<{ supports: SupportStruct[] }> = ({ supports }) => {
   return (
     <div
       className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center
-  bg-black bg-opacity-50 transform z-[3000] transition-transform duration-300 scale-0`}
+    bg-black bg-opacity-50 transform z-[3000] transition-transform duration-300 scale-0`}
     >
       <div className="bg-white shadow-lg shadow-slate-900 rounded-xl w-11/12 md:w-2/5 h-7/12 p-6">
         <form className="flex flex-col space-y-8">
           <div className="flex flex-row justify-between items-center">
-            <p className="font-medium text-2xl">Donations (115)</p>
+            <p className="font-medium text-2xl">Donations ({supports.length})</p>
             <button type="button" className="border-0 bg-transparent focus:outline-none">
               <TfiClose className="text-black" />
             </button>
           </div>
 
           <div className="flex flex-col space-y-10 max-h-[30rem] overflow-scroll">
-            {Array(16)
-              .fill()
-              .map((item: any, i: number) => (
-                <Donation key={i} />
-              ))}
+            {supports.map((support: any, i: number) => (
+              <Donation support={support} key={i} />
+            ))}
           </div>
 
           <button
@@ -39,4 +38,4 @@ const Donors: React.FC = () => {
   )
 }
 
-export default Donors
+export default Supports
