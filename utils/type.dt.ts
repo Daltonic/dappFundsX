@@ -10,13 +10,15 @@ export interface CharityStruct {
   image: string
   fullname: string
   name: string
+  profile: string
   description: string
   timestamp: number
   donations: number
   raised: number
   amount: number
-  deleted: boolean
   owner: string
+  deleted: boolean
+  banned: boolean
 }
 
 export interface SupportStruct {

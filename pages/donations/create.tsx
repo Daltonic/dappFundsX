@@ -72,7 +72,7 @@ export default function Create() {
               <textarea
                 className="block w-full text-sm text-slate-500 bg-transparent
               border-0 focus:outline-none focus:ring-0"
-                placeholder="Movie Description"
+                placeholder="Description"
                 name="description"
                 required
               ></textarea>

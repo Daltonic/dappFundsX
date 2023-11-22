@@ -34,6 +34,34 @@ const Donor: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
             <input
               className="block w-full text-sm text-slate-500 bg-transparent
               border-0 focus:outline-none focus:ring-0"
+              type="text"
+              name="name"
+              placeholder="Your Name (Optional)"
+              required
+            />
+          </div>
+
+          <div
+            className="flex justify-between items-center rounded-xl p-2 w-full
+          border border-gray-300 mt-5"
+          >
+            <input
+              className="block w-full text-sm text-slate-500 bg-transparent
+              border-0 focus:outline-none focus:ring-0"
+              type="text"
+              name="comment"
+              placeholder="Words of support (Optional)"
+              required
+            />
+          </div>
+
+          <div
+            className="flex justify-between items-center rounded-xl p-2 w-full
+          border border-gray-300 mt-5"
+          >
+            <input
+              className="block w-full text-sm text-slate-500 bg-transparent
+              border-0 focus:outline-none focus:ring-0"
               type="number"
               step={0.01}
               min={0.01}
