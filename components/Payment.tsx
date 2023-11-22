@@ -30,7 +30,7 @@ const Payment: React.FC<ComponentProp> = ({ charity, supports }) => {
 
         <div className="h-1 bg-gray-300 rounded-full mb-2">
           <div
-            className="h-full overflow-hidden bg-green-600"
+            className="h-full overflow-hidden bg-green-600 rounded-full"
             style={{ width: `${(charity.raised / charity.amount) * 100}%` }}
           />
         </div>

@@ -14,8 +14,8 @@ export const generateCharities = (count: number): CharityStruct[] => {
       timestamp: faker.date.past().getTime(),
       deleted: faker.datatype.boolean(),
       donations: faker.number.int({ min: 1, max: 100 }),
-      raised: faker.number.float({ min: 10, max: 20 }),
-      amount: faker.number.float({ min: 1, max: 20 }),
+      raised: faker.number.float({ min: 10, max: 15 }),
+      amount: faker.number.float({ min: 10, max: 20 }),
       owner: faker.string.hexadecimal({
         length: { min: 42, max: 42 },
         prefix: '0x',
