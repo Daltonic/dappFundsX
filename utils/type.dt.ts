@@ -55,6 +55,8 @@ export interface GlobalState {
   deleteModal: string
   donorsModal: string
   supportModal: string
+  banModal: string
+  owner: string
 }
 
 export interface RootState {

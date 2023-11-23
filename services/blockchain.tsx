@@ -33,6 +33,12 @@ const getEthereumContracts = async () => {
   }
 }
 
+const getAdmin = async (): Promise<string> => {
+  const contract = await getEthereumContracts()
+  const owner = await contract.owner()
+  return owner
+}
+
 const getCharities = async (): Promise<CharityStruct[]> => {
   const contract = await getEthereumContracts()
   const charities = await contract.getCharities()
@@ -134,6 +140,45 @@ const makeDonation = async (donor: DonorParams): Promise<void> => {
   }
 }
 
+const deleteCharity = async (id: number): Promise<void> => {
+  if (!ethereum) {
+    reportError('Please install a browser provider')
+    return Promise.reject(new Error('Browser provider not installed'))
+  }
+
+  try {
+    const contract = await getEthereumContracts()
+    tx = await contract.deleteCharity(id)
+    await tx.wait()
+
+    return Promise.resolve(tx)
+  } catch (error) {
+    reportError(error)
+    return Promise.reject(error)
+  }
+}
+
+const banCharity = async (id: number): Promise<void> => {
+  if (!ethereum) {
+    reportError('Please install a browser provider')
+    return Promise.reject(new Error('Browser provider not installed'))
+  }
+
+  try {
+    const contract = await getEthereumContracts()
+    tx = await contract.toggleBan(id)
+    await tx.wait()
+
+    const charity = await getCharity(Number(id))
+    store.dispatch(setCharity(charity))
+
+    return Promise.resolve(tx)
+  } catch (error) {
+    reportError(error)
+    return Promise.reject(error)
+  }
+}
+
 const structuredCharities = (charities: CharityStruct[]): CharityStruct[] =>
   charities
     .map((charity) => ({
@@ -174,4 +219,7 @@ export {
   createCharity,
   updateCharity,
   makeDonation,
+  deleteCharity,
+  banCharity,
+  getAdmin,
 }

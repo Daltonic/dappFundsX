@@ -7,4 +7,6 @@ export const globalStates: GlobalState = {
   deleteModal: 'scale-0',
   donorsModal: 'scale-0',
   supportModal: 'scale-0',
+  banModal: 'scale-0',
+  owner: '',
 }

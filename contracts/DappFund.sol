@@ -117,6 +117,7 @@ contract DappFund is Ownable, AccessControl {
 
   function donate(uint256 id, string memory fullname, string memory comment) public payable {
     require(charityExist[id], 'Charity Not Found');
+    require(!charities[id].banned, 'Charity Banned, contact admin');
     require(msg.value > 0 ether, 'Donation cannot be zero');
     require(charities[id].raised < charities[id].amount, 'Charity budget fulfilled');
 
@@ -178,7 +179,6 @@ contract DappFund is Ownable, AccessControl {
     for (uint i = 1; i <= _totalCharities.current(); i++) {
       if (
         !charities[i].deleted &&
-        !charities[i].banned &&
         charities[i].raised < charities[i].amount &&
         charities[i].owner == msg.sender
       ) {
@@ -192,7 +192,6 @@ contract DappFund is Ownable, AccessControl {
     for (uint i = 1; i <= _totalCharities.current(); i++) {
       if (
         !charities[i].deleted &&
-        !charities[i].banned &&
         charities[i].raised < charities[i].amount &&
         charities[i].owner == msg.sender
       ) {

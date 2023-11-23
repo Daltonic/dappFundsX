@@ -20,4 +20,10 @@ export const globalActions = {
   setSupportModal: (state: GlobalState, action: PayloadAction<string>) => {
     state.supportModal = action.payload
   },
+  setBanModal: (state: GlobalState, action: PayloadAction<string>) => {
+    state.banModal = action.payload
+  },
+  setOwner: (state: GlobalState, action: PayloadAction<string>) => {
+    state.owner = action.payload
+  },
 }
