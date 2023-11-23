@@ -4,7 +4,6 @@ import Supports from '@/components/Supports'
 import NavBtn from '@/components/NavBtn'
 import Payment from '@/components/Payment'
 import { globalActions } from '@/store/globalSlices'
-import { generateCharities, generateSupports } from '@/utils/fakeData'
 import { CharityStruct, RootState, SupportStruct } from '@/utils/type.dt'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import Head from 'next/head'
@@ -12,6 +11,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Donor from '@/components/Donor'
+import { getCharity, getSupporters } from '@/services/blockchain'
 
 interface PageProps {
   charityData: CharityStruct
@@ -48,7 +48,7 @@ const Page: NextPage<PageProps> = ({ charityData, supportsData }) => {
           lg:w-2/3 w-full mx-auto space-y-4 sm:space-y-0 sm:space-x-10 my-10 px-8 sm:px-0"
         >
           <Details supports={supports} charity={charity} />
-          <Payment supports={supports} charity={charity} />
+          <Payment supports={supports.slice(0, 4)} charity={charity} />
         </div>
       )}
 
@@ -70,8 +70,8 @@ export default Page
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { id } = context.query
 
-  const charityData: CharityStruct = generateCharities(Number(id))[0]
-  const supportsData: SupportStruct[] = generateSupports(4)
+  const charityData: CharityStruct = await getCharity(Number(id))
+  const supportsData: SupportStruct[] = await getSupporters(Number(id))
   return {
     props: {
       charityData: JSON.parse(JSON.stringify(charityData)),

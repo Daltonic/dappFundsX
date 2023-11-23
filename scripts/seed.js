@@ -109,8 +109,8 @@ async function main() {
     //     })
     //   })
 
-    await getCharities(dappFundContract)
-    await getSupports(dappFundContract, 1)
+    // await getCharities(dappFundContract)
+    // await getSupports(dappFundContract, 1)
   } catch (error) {
     console.error('Unhandled error:', error)
   }

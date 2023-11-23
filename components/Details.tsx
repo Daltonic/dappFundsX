@@ -29,7 +29,7 @@ const Details: React.FC<ComponentProp> = ({ charity, supports }) => {
         </span>
         <span className="flex">
           <MdCheckCircle size={25} className="text-green-600" />
-          <a href="#" className="underline">
+          <a target="_blank" href={charity.profile} className="underline">
             Learn more
           </a>
         </span>

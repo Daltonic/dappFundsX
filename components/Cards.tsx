@@ -4,12 +4,13 @@ import React from 'react'
 import { BsDot } from 'react-icons/bs'
 import { MdChevronRight } from 'react-icons/md'
 
-
 const Cards: React.FC<{ charities: CharityStruct[] }> = ({ charities }) => {
   return (
     <div className="my-10 lg:w-2/3 w-full mx-auto">
       <p className="text-center">Where you can help</p>
-      <h4 className="text-2xl font-medium mb-6 mt-2 text-center">Featured Topics</h4>
+      <h4 className="text-2xl font-medium mb-6 mt-2 text-center">
+        {charities.length > 0 ? 'Featured Topics' : 'No Charities Yet'}
+      </h4>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
         {charities.map((charity: CharityStruct, i: number) => (
           <Card key={i} charity={charity} />
@@ -27,7 +28,7 @@ const Card: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
         <div>
           <h4 className="text-xl font-medium capitalize mb-1">{charity.name}</h4>
           <div className="flex justify-start items-center">
-            <span>{charity.raised.toFixed(2)} ETH</span>
+            <span>{charity.amount.toFixed(2)} ETH</span>
             <BsDot size={30} className="text-gray-300" />
             <span className="text-gray-500">
               {charity.donations == 1

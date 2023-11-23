@@ -1,9 +1,9 @@
 import { SupportStruct } from '@/utils/type.dt'
 import { BiDonateHeart } from 'react-icons/bi'
 import { BsDot } from 'react-icons/bs'
-import moment from 'moment'
 import { truncate } from '@/utils/helper'
 import { useState } from 'react'
+import Moment from 'react-moment'
 
 interface ComponentProp {
   comment?: boolean
@@ -30,7 +30,9 @@ const Donation: React.FC<ComponentProp> = ({ comment, support }) => {
         <div className="flex justify-start items-center">
           <span>{support?.amount.toFixed(2)} ETH</span>
           <BsDot size={30} className="text-gray-300" />
-          <span className="text-gray-500">{moment(support?.timestamp).fromNow()}</span>
+          <Moment className="text-gray-500" fromNow>
+            {support?.timestamp}
+          </Moment>
         </div>
 
         {comment && (

@@ -3,6 +3,7 @@ import Cards from '@/components/Cards'
 import NavBtn from '@/components/NavBtn'
 import Quote from '@/components/Quote'
 import Start from '@/components/Start'
+import { getCharities } from '@/services/blockchain'
 import { globalActions } from '@/store/globalSlices'
 import { generateCharities } from '@/utils/fakeData'
 import { CharityStruct, RootState } from '@/utils/type.dt'
@@ -42,7 +43,7 @@ const Page: NextPage<{ charitiesData: CharityStruct[] }> = ({ charitiesData }) =
 export default Page
 
 export const getServerSideProps = async () => {
-  const charitiesData: CharityStruct[] = generateCharities(5)
+  const charitiesData: CharityStruct[] = await getCharities()
   return {
     props: { charitiesData: JSON.parse(JSON.stringify(charitiesData)) },
   }

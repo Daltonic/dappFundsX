@@ -126,11 +126,13 @@ contract DappFund is Ownable, AccessControl {
     support.id = _totalDonation.current();
     support.cid = id;
     support.fullname = fullname;
+    support.amount = msg.value;
     support.comment = comment;
     support.timestamp = currentTime();
     supportersOf[id].push(support);
 
     charities[id].raised += msg.value;
+    charities[id].donations += 1;
 
     uint256 fee = (msg.value * charityTax) / 100;
     uint256 payment = msg.value - fee;
@@ -164,6 +166,34 @@ contract DappFund is Ownable, AccessControl {
     for (uint i = 1; i <= _totalCharities.current(); i++) {
       if (
         !charities[i].deleted && !charities[i].banned && charities[i].raised < charities[i].amount
+      ) {
+        Charities[index++] = charities[i];
+      }
+    }
+  }
+
+  function getMyCharities() public view returns (CharityStruct[] memory Charities) {
+    uint256 available;
+    for (uint i = 1; i <= _totalCharities.current(); i++) {
+      if (
+        !charities[i].deleted &&
+        !charities[i].banned &&
+        charities[i].raised < charities[i].amount &&
+        charities[i].owner == msg.sender
+      ) {
+        available++;
+      }
+    }
+
+    Charities = new CharityStruct[](available);
+
+    uint256 index;
+    for (uint i = 1; i <= _totalCharities.current(); i++) {
+      if (
+        !charities[i].deleted &&
+        !charities[i].banned &&
+        charities[i].raised < charities[i].amount &&
+        charities[i].owner == msg.sender
       ) {
         Charities[index++] = charities[i];
       }
