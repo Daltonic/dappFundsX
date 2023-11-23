@@ -25,7 +25,18 @@ const Donation: React.FC<ComponentProp> = ({ comment, support }) => {
       </div>
 
       <div className="flex flex-col">
-        <p className="font-semibold capitalize">{support?.fullname}</p>
+        {support?.fullname ? (
+          <p className="font-semibold capitalize">{support?.fullname}</p>
+        ) : (
+          <p className="font-semibold capitalize">
+            {truncate({
+              text: support?.supporter,
+              startChars: 4,
+              endChars: 4,
+              maxLength: 11,
+            })}
+          </p>
+        )}
 
         <div className="flex justify-start items-center">
           <span>{support?.amount.toFixed(2)} ETH</span>

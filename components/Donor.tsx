@@ -1,13 +1,67 @@
-import React from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { TfiClose } from 'react-icons/tfi'
 import { useDispatch, useSelector } from 'react-redux'
-import { CharityStruct, RootState } from '@/utils/type.dt'
+import { CharityStruct, DonorParams, RootState } from '@/utils/type.dt'
 import { globalActions } from '@/store/globalSlices'
+import { useAccount } from 'wagmi'
+import { toast } from 'react-toastify'
+import { makeDonation } from '@/services/blockchain'
 
 const Donor: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
   const { donorsModal } = useSelector((states: RootState) => states.globalStates)
   const dispatch = useDispatch()
   const { setDonorModal } = globalActions
+
+  const { address } = useAccount()
+  const [donor, setDonor] = useState<DonorParams>({
+    id: charity.id,
+    fullname: '',
+    comment: '',
+    amount: '',
+  })
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+
+    if (!donor.amount || !donor.comment) return
+
+    if (!address) return toast.warning('Connect wallet first!')
+
+    await toast.promise(
+      new Promise<void>((resolve, reject) => {
+        makeDonation(donor)
+          .then((tx) => {
+            dispatch(setDonorModal('scale-0'))
+            resetForm()
+            console.log(tx)
+            resolve(tx)
+          })
+          .catch((error) => reject(error))
+      }),
+      {
+        pending: 'Approve transaction...',
+        success: 'Donotion received successfully 👌',
+        error: 'Encountered error 🤯',
+      }
+    )
+  }
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setDonor((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
+  const resetForm = () => {
+    setDonor({
+      id: charity.id,
+      fullname: '',
+      comment: '',
+      amount: '',
+    })
+  }
 
   return (
     <div
@@ -15,7 +69,7 @@ const Donor: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
     bg-black bg-opacity-50 transform z-[3000] transition-transform duration-300 ${donorsModal}`}
     >
       <div className="bg-white shadow-lg shadow-slate-900 rounded-xl w-11/12 md:w-1/5 h-7/12 p-6">
-        <form className="flex flex-col space-y-4">
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <div className="flex flex-row justify-between items-center">
             <p className="font-medium text-2xl">Support Us</p>
             <button
@@ -35,9 +89,10 @@ const Donor: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
               className="block w-full text-sm text-slate-500 bg-transparent
               border-0 focus:outline-none focus:ring-0"
               type="text"
-              name="name"
+              name="fullname"
               placeholder="Your Name (Optional)"
-              required
+              value={donor.fullname}
+              onChange={handleChange}
             />
           </div>
 
@@ -50,8 +105,10 @@ const Donor: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
               border-0 focus:outline-none focus:ring-0"
               type="text"
               name="comment"
-              placeholder="Words of support (Optional)"
+              placeholder="Words of support"
               required
+              value={donor.comment}
+              onChange={handleChange}
             />
           </div>
 
@@ -65,9 +122,11 @@ const Donor: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
               type="number"
               step={0.01}
               min={0.01}
-              name="target"
+              name="amount"
               placeholder="Amount e.g. 0.02 ETH"
               required
+              value={donor.amount}
+              onChange={handleChange}
             />
           </div>
 

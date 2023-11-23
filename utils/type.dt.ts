@@ -5,6 +5,13 @@ export interface TruncateParams {
   maxLength: number
 }
 
+export interface DonorParams {
+  id?: number
+  comment: string
+  fullname: string
+  amount: number | string
+}
+
 export interface CharityParams {
   id?: number
   name: string

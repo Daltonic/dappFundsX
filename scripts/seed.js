@@ -40,7 +40,7 @@ const generateSupports = (count) => {
     const support = {
       id: i + 1,
       cid: faker.number.int({ min: 1, max: 100 }),
-      fullname: faker.person.firstName(),
+      fullname: faker.datatype.boolean() ? faker.person.firstName() : '',
       comment: faker.lorem.paragraph(),
       timestamp: faker.date.past().getTime(),
       amount: faker.number.float({ min: 0.01, max: 4 }),

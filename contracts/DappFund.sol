@@ -126,6 +126,7 @@ contract DappFund is Ownable, AccessControl {
     support.id = _totalDonation.current();
     support.cid = id;
     support.fullname = fullname;
+    support.supporter = msg.sender;
     support.amount = msg.value;
     support.comment = comment;
     support.timestamp = currentTime();
