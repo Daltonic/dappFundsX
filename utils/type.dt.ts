@@ -24,7 +24,7 @@ export interface CharityStruct {
 export interface SupportStruct {
   id: number
   cid: number
-  name: string
+  fullname: string
   amount: number
   timestamp: number
   comment: string

@@ -36,7 +36,7 @@ export const generateSupports = (count: number): SupportStruct[] => {
     const support: SupportStruct = {
       id: i + 1,
       cid: faker.number.int({ min: 1, max: 100 }),
-      name: faker.person.firstName(),
+      fullname: faker.person.firstName(),
       comment: faker.lorem.paragraph(),
       timestamp: faker.date.past().getTime(),
       amount: faker.number.float({ min: 0.01, max: 4 }),
