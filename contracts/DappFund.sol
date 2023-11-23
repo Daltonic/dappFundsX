@@ -35,7 +35,7 @@ contract DappFund is Ownable, AccessControl {
   struct SupportStruct {
     uint256 id;
     uint256 cid;
-    string name;
+    string fullname;
     uint256 amount;
     uint256 timestamp;
     string comment;
@@ -48,12 +48,14 @@ contract DappFund is Ownable, AccessControl {
 
   function createCharity(
     string memory name,
+    string memory fullname,
     string memory profile,
     string memory description,
     string memory image,
     uint256 amount
   ) public {
     require(bytes(name).length > 0, 'Name cannot be empty');
+    require(bytes(fullname).length > 0, 'Fullname cannot be empty');
     require(bytes(description).length > 0, 'Description cannot be empty');
     require(bytes(profile).length > 0, 'Profile cannot be empty');
     require(bytes(image).length > 0, 'Image cannot be empty');
@@ -64,6 +66,7 @@ contract DappFund is Ownable, AccessControl {
     charity.id = _totalCharities.current();
     charity.owner = msg.sender;
     charity.name = name;
+    charity.fullname = fullname;
     charity.description = description;
     charity.image = image;
     charity.profile = profile;
@@ -77,29 +80,32 @@ contract DappFund is Ownable, AccessControl {
   function updateCharity(
     uint256 id,
     string memory name,
+    string memory fullname,
     string memory profile,
     string memory description,
     string memory image,
     uint256 amount
   ) public {
-    require(msg.sender == charities[id].owner, 'Unauthorized Entity');
     require(charityExist[id], 'Charity Not Found');
+    require(msg.sender == charities[id].owner, 'Unauthorized Entity');
     require(bytes(name).length > 0, 'Name cannot be empty');
+    require(bytes(fullname).length > 0, 'Fullname cannot be empty');
     require(bytes(description).length > 0, 'Description cannot be empty');
     require(bytes(profile).length > 0, 'Profile cannot be empty');
     require(bytes(image).length > 0, 'Image cannot be empty');
     require(amount > 0 ether, 'Amount cannot be zero');
 
     charities[id].name = name;
+    charities[id].fullname = fullname;
     charities[id].image = image;
     charities[id].amount = amount;
     charities[id].profile = profile;
     charities[id].description = description;
   }
 
-  function deleteProject(uint256 id) public {
-    require(msg.sender == charities[id].owner, 'Unauthorized Entity');
+  function deleteCharity(uint256 id) public {
     require(charityExist[id], 'Charity Not Found');
+    require(msg.sender == charities[id].owner, 'Unauthorized Entity');
 
     charities[id].deleted = true;
   }
@@ -109,9 +115,9 @@ contract DappFund is Ownable, AccessControl {
     charities[id].banned = !charities[id].banned;
   }
 
-  function donate(uint256 id, string memory name, string memory comment) public payable {
-    require(msg.value > 0 ether, 'Donation cannot be zero');
+  function donate(uint256 id, string memory fullname, string memory comment) public payable {
     require(charityExist[id], 'Charity Not Found');
+    require(msg.value > 0 ether, 'Donation cannot be zero');
     require(charities[id].raised < charities[id].amount, 'Charity budget fulfilled');
 
     _totalDonation.increment();
@@ -119,13 +125,15 @@ contract DappFund is Ownable, AccessControl {
     SupportStruct memory support;
     support.id = _totalDonation.current();
     support.cid = id;
-    support.name = name;
+    support.fullname = fullname;
     support.comment = comment;
     support.timestamp = currentTime();
     supportersOf[id].push(support);
 
-    uint256 fee = (charities[id].amount * charityTax) / 100;
-    uint256 payment = charities[id].amount - fee;
+    charities[id].raised += msg.value;
+
+    uint256 fee = (msg.value * charityTax) / 100;
+    uint256 payment = msg.value - fee;
 
     payTo(charities[id].owner, payment);
     payTo(owner(), fee);

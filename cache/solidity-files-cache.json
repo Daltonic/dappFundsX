@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/daltonic/Sites/charity_dapp/contracts/DappFund.sol": {
-      "lastModificationDate": 1700677401500,
-      "contentHash": "2fae203a373378354e102e08145b3906",
+      "lastModificationDate": 1700747911370,
+      "contentHash": "765718fb5461b23414ab8acfdffae5c8",
       "sourceName": "contracts/DappFund.sol",
       "solcConfig": {
         "version": "0.8.17",
