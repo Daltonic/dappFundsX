@@ -1,31 +1,21 @@
 import React from 'react'
 import { TfiClose } from 'react-icons/tfi'
-import { useDispatch, useSelector } from 'react-redux'
-import { CharityStruct, RootState } from '@/utils/type.dt'
-import { globalActions } from '@/store/globalSlices'
+import { CharityStruct } from '@/utils/type.dt'
 import { FaBan } from 'react-icons/fa'
 import { useAccount } from 'wagmi'
 import { toast } from 'react-toastify'
-import { banCharity } from '@/services/blockchain'
 
 const Ban: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
   const { address } = useAccount()
-  const { banModal } = useSelector((states: RootState) => states.globalStates)
-  const dispatch = useDispatch()
-  const { setBanModal } = globalActions
+  const banModal = 'scale-0'
 
   const handleBannig = async () => {
     if (!address) return toast.warning('Connect wallet first!')
 
     await toast.promise(
       new Promise<void>((resolve, reject) => {
-        banCharity(charity.id)
-          .then((tx) => {
-            console.log(tx)
-            dispatch(setBanModal('scale-0'))
-            resolve(tx)
-          })
-          .catch((error) => reject(error))
+        console.log(charity)
+        resolve()
       }),
       {
         pending: 'Approve transaction...',
@@ -44,11 +34,7 @@ const Ban: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
         <div className="flex flex-col space-y-2">
           <div className="flex flex-row justify-between items-center">
             <p className="font-medium text-2xl">Ban Campaign</p>
-            <button
-              onClick={() => dispatch(setBanModal('scale-0'))}
-              type="button"
-              className="border-0 bg-transparent focus:outline-none"
-            >
+            <button type="button" className="border-0 bg-transparent focus:outline-none">
               <TfiClose className="text-black" />
             </button>
           </div>

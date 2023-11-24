@@ -1,27 +1,23 @@
 import Banner from '@/components/Banner'
 import Cards from '@/components/Cards'
 import NavBtn from '@/components/NavBtn'
-import { getMyCharities } from '@/services/blockchain'
-import { globalActions } from '@/store/globalSlices'
-import { CharityStruct, RootState } from '@/utils/type.dt'
+import { generateCharities } from '@/utils/fakeData'
+import { CharityStruct } from '@/utils/type.dt'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 
 const Page: NextPage = () => {
-  const { charities } = useSelector((states: RootState) => states.globalStates)
-  const dispatch = useDispatch()
-  const { setCharities } = globalActions
+  const [charities, setCharities] = useState<CharityStruct[] | null>(null)
 
   useEffect(() => {
     const fetchCharities = async () => {
-      const charitiesData: CharityStruct[] = await getMyCharities()
-      dispatch(setCharities(charitiesData))
+      const charitiesData: CharityStruct[] = generateCharities(5)
+      setCharities(charitiesData)
     }
 
     fetchCharities()
-  }, [dispatch, setCharities])
+  }, [])
 
   return (
     <div>
@@ -31,7 +27,7 @@ const Page: NextPage = () => {
       </Head>
       <Banner mine />
       <div className="h-10"></div>
-      <Cards charities={charities} />
+      {charities && <Cards charities={charities} />}
       <div className="h-10"></div>
       <NavBtn />
     </div>
@@ -39,10 +35,3 @@ const Page: NextPage = () => {
 }
 
 export default Page
-
-export const getServerSideProps = async () => {
-  const charitiesData: CharityStruct[] = await getMyCharities()
-  return {
-    props: { charitiesData: JSON.parse(JSON.stringify(charitiesData)) },
-  }
-}

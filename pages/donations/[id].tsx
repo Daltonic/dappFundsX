@@ -3,16 +3,13 @@ import Details from '@/components/Details'
 import Supports from '@/components/Supports'
 import NavBtn from '@/components/NavBtn'
 import Payment from '@/components/Payment'
-import { globalActions } from '@/store/globalSlices'
-import { CharityStruct, RootState, SupportStruct } from '@/utils/type.dt'
+import { CharityStruct, SupportStruct } from '@/utils/type.dt'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import Donor from '@/components/Donor'
-import { getAdmin, getCharity, getSupporters } from '@/services/blockchain'
 import Ban from '@/components/Ban'
+import { generateCharities, generateSupports } from '@/utils/fakeData'
 
 interface PageProps {
   charityData: CharityStruct
@@ -21,15 +18,8 @@ interface PageProps {
 }
 
 const Page: NextPage<PageProps> = ({ charityData, supportsData, owner }) => {
-  const { charity, supports } = useSelector((states: RootState) => states.globalStates)
-  const dispatch = useDispatch()
-  const { setCharity, setSupports, setOwner } = globalActions
-
-  useEffect(() => {
-    dispatch(setOwner(owner))
-    dispatch(setCharity(charityData))
-    dispatch(setSupports(supportsData))
-  }, [dispatch, setCharity, charityData, setSupports, supportsData])
+  const charity = charityData
+  const supports = supportsData
 
   const router = useRouter()
   const { id } = router.query
@@ -73,9 +63,9 @@ export default Page
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { id } = context.query
 
-  const owner: string = await getAdmin()
-  const charityData: CharityStruct = await getCharity(Number(id))
-  const supportsData: SupportStruct[] = await getSupporters(Number(id))
+  const owner: string = ''
+  const charityData: CharityStruct = generateCharities(Number(id))[0]
+  const supportsData: SupportStruct[] = generateSupports(7)
   return {
     props: {
       owner: JSON.parse(JSON.stringify(owner)),

@@ -1,16 +1,11 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { TfiClose } from 'react-icons/tfi'
-import { useDispatch, useSelector } from 'react-redux'
-import { CharityStruct, DonorParams, RootState } from '@/utils/type.dt'
-import { globalActions } from '@/store/globalSlices'
+import { CharityStruct, DonorParams } from '@/utils/type.dt'
 import { useAccount } from 'wagmi'
 import { toast } from 'react-toastify'
-import { makeDonation } from '@/services/blockchain'
 
 const Donor: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
-  const { donorsModal } = useSelector((states: RootState) => states.globalStates)
-  const dispatch = useDispatch()
-  const { setDonorModal } = globalActions
+  const donorsModal = 'scale-0'
 
   const { address } = useAccount()
   const [donor, setDonor] = useState<DonorParams>({
@@ -29,14 +24,8 @@ const Donor: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
 
     await toast.promise(
       new Promise<void>((resolve, reject) => {
-        makeDonation(donor)
-          .then((tx) => {
-            dispatch(setDonorModal('scale-0'))
-            resetForm()
-            console.log(tx)
-            resolve(tx)
-          })
-          .catch((error) => reject(error))
+        console.log(donor)
+        resolve()
       }),
       {
         pending: 'Approve transaction...',
@@ -72,11 +61,7 @@ const Donor: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <div className="flex flex-row justify-between items-center">
             <p className="font-medium text-2xl">Support Us</p>
-            <button
-              onClick={() => dispatch(setDonorModal('scale-0'))}
-              type="button"
-              className="border-0 bg-transparent focus:outline-none"
-            >
+            <button type="button" className="border-0 bg-transparent focus:outline-none">
               <TfiClose className="text-black" />
             </button>
           </div>

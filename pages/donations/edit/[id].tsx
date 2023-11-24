@@ -1,5 +1,5 @@
 import NavBtn from '@/components/NavBtn'
-import { getCharity, updateCharity } from '@/services/blockchain'
+import { generateCharities } from '@/utils/fakeData'
 import { CharityParams, CharityStruct } from '@/utils/type.dt'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import Head from 'next/head'
@@ -38,13 +38,8 @@ const Page: NextPage<{ charityData: CharityStruct }> = ({ charityData }) => {
 
     await toast.promise(
       new Promise<void>((resolve, reject) => {
-        updateCharity(charity)
-          .then((tx) => {
-            console.log(tx)
-            router.push('/donations/' + id)
-            resolve(tx)
-          })
-          .catch((error) => reject(error))
+        console.log(charity)
+        resolve()
       }),
       {
         pending: 'Approve transaction...',
@@ -57,7 +52,7 @@ const Page: NextPage<{ charityData: CharityStruct }> = ({ charityData }) => {
   return (
     <div>
       <Head>
-        <title>Charity Update</title>
+        <title>Charity Edit</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -183,7 +178,7 @@ export default Page
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { id } = context.query
 
-  const charityData: CharityStruct = await getCharity(Number(id))
+  const charityData: CharityStruct = generateCharities(Number(id))[0]
   return {
     props: {
       charityData: JSON.parse(JSON.stringify(charityData)),

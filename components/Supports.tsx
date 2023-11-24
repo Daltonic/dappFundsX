@@ -1,14 +1,10 @@
 import React from 'react'
 import { TfiClose } from 'react-icons/tfi'
 import Donation from './Donation'
-import { RootState, SupportStruct } from '@/utils/type.dt'
-import { useDispatch, useSelector } from 'react-redux'
-import { globalActions } from '@/store/globalSlices'
+import { SupportStruct } from '@/utils/type.dt'
 
 const Supports: React.FC<{ supports: SupportStruct[] }> = ({ supports }) => {
-  const { supportModal } = useSelector((states: RootState) => states.globalStates)
-  const dispatch = useDispatch()
-  const { setSupportModal } = globalActions
+  const supportModal = 'scale-0'
 
   return (
     <div
@@ -19,11 +15,7 @@ const Supports: React.FC<{ supports: SupportStruct[] }> = ({ supports }) => {
         <form className="flex flex-col space-y-8">
           <div className="flex flex-row justify-between items-center">
             <p className="font-medium text-2xl">Donations ({supports.length})</p>
-            <button
-              onClick={() => dispatch(setSupportModal('scale-0'))}
-              type="button"
-              className="border-0 bg-transparent focus:outline-none"
-            >
+            <button type="button" className="border-0 bg-transparent focus:outline-none">
               <TfiClose className="text-black" />
             </button>
           </div>
