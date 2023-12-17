@@ -5,14 +5,14 @@ import { MdSunnySnowing } from 'react-icons/md'
 
 const Header: React.FC = () => {
   return (
-    <header className='w-full absolute z-20 pt-5 px-5'>
+    <header className='w-full absolute z-20 pt-5 px-5 sm:px-0'>
       <nav
-        className="flex flex-wrap items-center justify-center lg:w-2/4 w-full
-      px-2 py-3 shadow-md text-white mb-3 bg-white mx-auto rounded-full"
+        className="flex flex-wrap items-center justify-center lg:w-2/3 w-full
+        px-2 py-3 shadow-md text-white mb-3 bg-white mx-auto rounded-full"
       >
         <div
           className="container px-4 mx-auto flex flex-wrap items-center
-        justify-center"
+          justify-center"
         >
           <div className="w-full relative flex justify-between px-4 lg:static">
             <Link
@@ -21,7 +21,7 @@ const Header: React.FC = () => {
               href="/"
             >
               <MdSunnySnowing size={25} />
-              <span>Dapp Funds</span>
+              <span className='hidden sm:flex'>Dapp Funds</span>
             </Link>
 
             <ConnectBtn />

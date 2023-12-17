@@ -1,5 +1,4 @@
-require('@nomiclabs/hardhat-waffle')
-require('dotenv').config()
+require("@nomicfoundation/hardhat-toolbox");
 
 module.exports = {
   defaultNetwork: 'localhost',

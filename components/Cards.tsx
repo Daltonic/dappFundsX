@@ -1,43 +1,46 @@
+import { CharityStruct } from '@/utils/type.dt'
 import Link from 'next/link'
 import React from 'react'
 import { BsDot } from 'react-icons/bs'
 import { MdChevronRight } from 'react-icons/md'
 
-const IMAGE_URL =
-  'https://ksr-ugc.imgix.net/assets/043/090/347/1cce47acb0d545ca3e3246315d402fdd_original.jpg?ixlib=rb-4.1.0&crop=faces&w=1024&h=576&fit=crop&v=1700169309&auto=format&frame=1&q=92&s=abffe35ae96a32ba820dcf77b1a72589'
-const Cards = () => {
+const Cards: React.FC<{ charities: CharityStruct[] }> = ({ charities }) => {
   return (
     <div className="my-10 lg:w-2/3 w-full mx-auto">
       <p className="text-center">Where you can help</p>
-      <h4 className="text-2xl font-medium mb-6 mt-2 text-center">Featured Topics</h4>
+      <h4 className="text-2xl font-medium mb-6 mt-2 text-center">
+        {charities.length > 0 ? 'Featured Topics' : 'No Charities Yet'}
+      </h4>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-        {Array(5)
-          .fill()
-          .map((item: any, i: number) => (
-            <Card key={i} donationId={i + 1} />
-          ))}
+        {charities.map((charity: CharityStruct, i: number) => (
+          <Card key={i} charity={charity} />
+        ))}
       </div>
     </div>
   )
 }
 
-const Card: React.FC<{ donationId: number }> = ({ donationId }) => {
+const Card: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
   return (
     <div className="shadow flex flex-col w-80 bg-gray-50 rounded-lg overflow-hidden">
-      <img src={IMAGE_URL} alt="hello" />
+      <img src={charity.image} alt={charity.name} />
       <div className="p-5 space-y-8">
         <div>
-          <h4 className="text-xl font-medium mb-1">Help after UK storms</h4>
+          <h4 className="text-xl font-medium capitalize mb-1">{charity.name}</h4>
           <div className="flex justify-start items-center">
-            <span>$2,100</span>
+            <span>{charity.amount.toFixed(2)} ETH</span>
             <BsDot size={30} className="text-gray-300" />
-            <span className="text-gray-500">25 donations</span>
+            <span className="text-gray-500">
+              {charity.donations == 1
+                ? `${charity.donations} donation`
+                : `${charity.donations} donations`}
+            </span>
           </div>
         </div>
         <Link
           className="flex justify-start items-center space-x-2
-        transition-all duration-300 ease-in-out hover:pl-5"
-          href={'/donations/' + donationId}
+          transition-all duration-300 ease-in-out hover:pl-5"
+          href={'/donations/' + charity.id}
         >
           <span>Donate now</span>
           <MdChevronRight />

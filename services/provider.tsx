@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth'
+'use client'
+
+import * as React from 'react'
+import {
+  GetSiweMessageOptions,
+  RainbowKitSiweNextAuthProvider,
+} from '@rainbow-me/rainbowkit-siwe-next-auth'
 import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import { RainbowKitProvider, connectorsForWallets, darkTheme } from '@rainbow-me/rainbowkit'
 import {
@@ -11,14 +16,15 @@ import {
 import { mainnet, polygonMumbai, sepolia, hardhat } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
+import { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 
 const { chains, publicClient } = configureChains(
   [mainnet, polygonMumbai, sepolia, hardhat],
-  [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID }), publicProvider()]
+  [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID as string }), publicProvider()]
 )
 
-const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
+const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string
 
 const connectors = connectorsForWallets([
   {
@@ -39,18 +45,26 @@ const wagmiConfig = createConfig({
 })
 
 const demoAppInfo = {
-  appName: 'DappBnb dApp',
+  appName: 'Dapp Funds dApp',
 }
 
-const getSiweMessageOptions = () => ({
+const getSiweMessageOptions: GetSiweMessageOptions = () => ({
   statement: `
   Once you're signed in, you'll be able to access all of our dApp's features.
-  Thank you for partnering with DappBnb!`,
+  Thank you for partnering with CrowdFunding!`,
 })
 
-const Providers = ({ children, pageProps }) => {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+export function Providers({
+  children,
+  pageProps,
+}: {
+  children: React.ReactNode
+  pageProps: {
+    session: Session
+  }
+}) {
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
 
   return (
     <WagmiConfig config={wagmiConfig}>
@@ -64,5 +78,3 @@ const Providers = ({ children, pageProps }) => {
     </WagmiConfig>
   )
 }
-
-export default Providers
