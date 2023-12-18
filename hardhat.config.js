@@ -9,7 +9,7 @@ module.exports = {
     },
     bitfinity: {
       url: 'https://testnet.bitfinity.network',
-      accounts: ['089b9888552787c24d8f4e4b96c11221884def4c2ae3f296a48ad65c4c9eb64a'],
+      accounts: [''],
       chainId: 355113,
     },
   },
