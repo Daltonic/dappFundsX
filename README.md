@@ -1,48 +1,71 @@
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/26466516/107675802-36216b80-6c77-11eb-8db1-4d3407dc53d9.png" alt="Next.js and TypeScript">
-</p>
+# DappFundsX Project Documentation
 
-<p align="center">
-  <img src="https://img.shields.io/static/v1?label=PRs&message=welcome&style=for-the-badge&color=24B36B&labelColor=000000" alt="PRs welcome!" />
+<!-- Read the full tutorial here: **[>> How to build a Decentralized Event Marketplace with Next.js, TypeScript, Tailwind CSS, and Solidity](https://daltonic.github.io)** -->
 
-  <img alt="License" src="https://img.shields.io/github/license/chhpt/typescript-nextjs-starter?style=for-the-badge&color=24B36B&labelColor=000000">
+![Charity Marketplace](./screenshots/1.png)
+The `DappFund.sol` project is a Solidity-written Ethereum smart contract that serves as the backbone of a decentralized application (dApp) for charity purposes. It leverages the OpenZeppelin library to ensure secure and standardized development of the contract.
 
-  <a href="https://twitter.com/intent/follow?screen_name=cwuyiqing">
-    <img src="https://img.shields.io/twitter/follow/cwuyiqing?style=for-the-badge&color=24B36B&labelColor=000000" alt="Follow @chhpt" />
-  </a>
-</p>
+![Charity Marketplace](./screenshots/0.png)
+The contract is designed around two primary structures: CharityStruct and SupportStruct, representing a charity and a supporter, respectively.
 
-<br>
+## Key features:
 
+- createCharity: Allows a user to create a new charity.
+- updateCharity: Allows the charity owner to update the details of an existing charity.
+- deleteCharity: Allows the charity owner or contract owner to delete a charity.
+- toggleBan: Allows the contract owner to ban or unban a charity.
+- donate: Allows a user to donate to a charity.
+- changeTax: Allows the contract owner to change the tax percentage.
+- getCharity: Returns a single charity by its ID.
+- getCharities: Returns all existing charities.
+- getMyCharities: Returns all charities created by the caller.
+- getSupports: Returns all supporters for a specific charity.
 
-# Hardhat-Tailwind-NextJs Ethers Starter Kit
-Speedily develope your decentralized application with this NextJs starter kit for free. It has Redux-Toolkit, NextJs 13, React 18, Hardhat, EthersJs, Tailwind, etc.
+## Running the Application
 
-Follow the steps below to download, install, and run this project.
+Supply the following keys in your `.env` variable:
 
-## Dependencies
-Install these prerequisites to follow along with the tutorial. See free video tutorial or a full explanation of each prerequisite.
-- NPM: https://nodejs.org
-- Hardhat: https://hardhat.org/
-- EthersJs: https://ethers.org/
-- Tailwind CSS: https://tailwindcss.com/
-
-
-## Step 1. Clone the project
-`git clone https://github.com/Daltonic/hardhat_ethersjs_next_starter_app <PROJECT NAME>`
-
-## Step 2. Install dependencies
 ```sh
-$ cd <PROJECT NAME>
-$ yarn install # or npm install
-```
-## Step 3. Start Hardhat Node
-Open the terminal and run the command below.
-```sh
-$ yarn hardhat node
+NEXT_PUBLIC_RPC_URL=http://127.0.0.1:8545
+NEXT_PUBLIC_ALCHEMY_ID=<YOUR_ALCHEMY_PROJECT_ID>
+NEXT_PUBLIC_PROJECT_ID=<WALLET_CONNECT_PROJECT_ID>
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=somereallysecretsecret
 ```
 
-## Step 4. Run the Front End Application
-`$ yarn dev`
-Visit this URL in your browser: http://localhost:3000
+`YOUR_ALCHEMY_PROJECT_ID`: [Get Key Here](https://dashboard.alchemy.com/)
+`WALLET_CONNECT_PROJECT_ID`: [Get Key Here](https://cloud.walletconnect.com/sign-in)
 
+Follow these steps to run the application:
+
+1. Install the package modules by running the command: `yarn install`
+2. Start the Hardhat server: `yarn blockchain`
+3. Run the contract deployment script: `yarn deploy`
+4. Run the contract seeding script: `yarn seed`
+5. Spin up the Next.js development server: `yarn dev`
+
+Now, your application should be up and running.
+
+## 📚 Key Technologies
+
+- 🌐 Next.js: A React framework for building server-side rendered and static websites.
+- 📘 TypeScript: A statically typed superset of JavaScript.
+- 📦 Hardhat: A development environment for Ethereum smart contracts.
+- 🌐 EthersJs: A library for interacting with Ethereum and Ethereum-like blockchains.
+- 📚 Redux-Toolkit: A library for managing application state.
+- 🎨 Tailwind CSS: A utility-first CSS framework.
+- 🌈 @rainbow-me/rainbowkit-siwe-next-auth: A library for authentication in Ethereum dApps.
+- 📝 React-Toastify: A library for adding toast notifications to your React application.
+- 📜 Swiper: A modern mobile touch slider.
+- 📚 Wagmi: A library for building Ethereum dApps.
+
+## Useful links
+
+- 🏠 [Website](https://dappmentors.org/)
+- ⚽ [Metamask](https://metamask.io/)
+- 💡 [Hardhat](https://hardhat.org/)
+- 📈 [Alchemy](https://dashboard.alchemy.com/)
+- 🔥 [NextJs](https://nextjs.org/)
+- 🎅 [TypeScript](https://www.typescriptlang.org/)
+- 🐻 [Solidity](https://soliditylang.org/)
+- 👀 [EthersJs](https://docs.ethers.io/v5/)

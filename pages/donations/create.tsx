@@ -137,7 +137,7 @@ const Page: NextPage = () => {
                   type="text"
                   name="image"
                   placeholder="Image URL"
-                  pattern="https?://.+(\.png|\.jpg|\.jpeg|\.gif)"
+                  pattern="https?://.+(\.(jpg|png|gif))?$"
                   title="Please enter a valid image URL (http(s)://...(.png|.jpg|.jpeg|.gif))"
                   required
                   value={charity.image}

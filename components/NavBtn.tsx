@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { globalActions } from '@/store/globalSlices'
 import { useAccount } from 'wagmi'
 
-const NavBtn: React.FC<{ donationId?: number; owner: string }> = ({ donationId, owner }) => {
+const NavBtn: React.FC<{ donationId?: number; owner?: string }> = ({ donationId, owner }) => {
   const { address } = useAccount()
   const dispatch = useDispatch()
   const { setDeleteModal } = globalActions

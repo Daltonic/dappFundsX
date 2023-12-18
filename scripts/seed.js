@@ -3,7 +3,7 @@ const { ethers } = require('hardhat')
 const fs = require('fs')
 
 const toWei = (num) => ethers.parseEther(num.toString())
-const charitiesCount = 5
+const charitiesCount = 1
 
 const generateCharities = (count) => {
   const charities = []
@@ -84,6 +84,8 @@ async function getSupports(contract, id) {
   console.log('Supports:', result)
 }
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 async function main() {
   let dappFundContract
 
@@ -93,24 +95,38 @@ async function main() {
 
     dappFundContract = await ethers.getContractAt('DappFund', dappFundAddress)
 
-    // generateCharities(charitiesCount).forEach(async (charity) => {
-    //   await createCharity(dappFundContract, charity)
-    // })
+    // Process #1
+    await Promise.all(
+      generateCharities(charitiesCount).map(async (charity) => {
+        await createCharity(dappFundContract, charity)
+      })
+    )
 
-    // Array(charitiesCount)
-    //   .fill()
-    //   .forEach((charity, i) => {
-    //     const randomCount = faker.number.int({ min: 1, max: 4 })
+    await delay(2500) // Wait for 2.5 seconds
 
-    //     generateSupports(randomCount).forEach(async (donation, i) => {
-    //       await makeDonations(dappFundContract, i + 1, donation, {
-    //         value: toWei(donation.amount),
-    //       })
-    //     })
-    //   })
+    // Process #2
+    await Promise.all(
+      Array(charitiesCount)
+        .fill()
+        .map(async (_, i) => {
+          const randomCount = faker.number.int({ min: 1, max: 2 })
+          const supports = generateSupports(randomCount)
 
-    // await getCharities(dappFundContract)
-    // await getSupports(dappFundContract, 1)
+          await Promise.all(
+            supports.map(async (donation, i) => {
+              await makeDonations(dappFundContract, i + 1, donation, {
+                value: toWei(donation.amount),
+              })
+            })
+          )
+        })
+    )
+
+    await delay(2500) // Wait for 2.5 seconds
+
+    // Process #3
+    await getCharities(dappFundContract)
+    await getSupports(dappFundContract, 1)
   } catch (error) {
     console.error('Unhandled error:', error)
   }
