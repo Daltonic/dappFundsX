@@ -7,10 +7,9 @@ import { useAccount } from 'wagmi'
 interface ComponentProp {
   charity: CharityStruct
   supports: SupportStruct[]
-  owner: string
 }
 
-const Payment: React.FC<ComponentProp> = ({ charity, supports, owner }) => {
+const Payment: React.FC<ComponentProp> = ({ charity, supports }) => {
   const { address } = useAccount()
 
   return (
@@ -86,16 +85,6 @@ const Payment: React.FC<ComponentProp> = ({ charity, supports, owner }) => {
         >
           See top donations
         </button>
-
-        {owner === address && (
-          <button
-            className="border border-gray-300 py-2 px-4 rounded-lg font-medium
-          transition-all duration-300 ease-in-out
-         hover:bg-red-100"
-          >
-            {charity.banned ? 'Unban Campaign' : 'Ban Campaign'}
-          </button>
-        )}
       </div>
     </div>
   )
