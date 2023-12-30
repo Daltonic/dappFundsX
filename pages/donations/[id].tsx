@@ -12,14 +12,15 @@ import Ban from '@/components/Ban'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { globalActions } from '@/store/globalSlices'
-import { getCharity, getSupporters } from '@/services/blockchain'
+import { getCharity, getAdmin, getSupporters } from '@/services/blockchain'
 
 interface PageProps {
   charityData: CharityStruct
   supportsData: SupportStruct[]
+  admin?: string
 }
 
-const Page: NextPage<PageProps> = ({ charityData, supportsData }) => {
+const Page: NextPage<PageProps> = ({ charityData, supportsData, admin }) => {
   const { charity, supports } = useSelector((states: RootState) => states.globalStates)
 
   const { setCharity, setSupports } = globalActions
@@ -60,7 +61,7 @@ const Page: NextPage<PageProps> = ({ charityData, supportsData }) => {
           <Donor charity={charity} />
           <Ban charity={charity} />
           <Supports supports={supports} />
-          <NavBtn owner={charity?.owner} donationId={Number(id)} />
+          <NavBtn charity={charity} admin={admin} />
         </>
       )}
     </div>
@@ -72,12 +73,14 @@ export default Page
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { id } = context.query
 
+  const admin: string = await getAdmin()
   const charityData: CharityStruct = await getCharity(Number(id))
   const supportsData: SupportStruct[] = await getSupporters(Number(id))
 
   return {
     props: {
       charityData: JSON.parse(JSON.stringify(charityData)),
+      admin: JSON.parse(JSON.stringify(admin)),
       supportsData: JSON.parse(JSON.stringify(supportsData)),
     },
   }

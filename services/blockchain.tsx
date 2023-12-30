@@ -28,6 +28,12 @@ const getEthereumContracts = async () => {
   }
 }
 
+const getAdmin = async (): Promise<string> => {
+  const contract = await getEthereumContracts()
+  const owner = await contract.owner()
+  return owner
+}
+
 const getCharities = async (): Promise<CharityStruct[]> => {
   const contract = await getEthereumContracts()
   const charities = await contract.getCharities()
@@ -180,4 +186,5 @@ export {
   updateCharity,
   deleteCharity,
   banCharity,
+  getAdmin,
 }

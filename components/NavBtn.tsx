@@ -5,11 +5,17 @@ import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { globalActions } from '@/store/globalSlices'
 import { useDispatch } from 'react-redux'
+import { CharityStruct } from '@/utils/type.dt'
 
-const NavBtn: React.FC<{ donationId?: number; owner?: string }> = ({ donationId, owner }) => {
+interface PageProp {
+  charity: CharityStruct
+  admin?: string
+}
+
+const NavBtn: React.FC<PageProp> = ({ charity, admin }) => {
   const { address } = useAccount()
   const dispatch = useDispatch()
-  const { setDeleteModal } = globalActions
+  const { setDeleteModal, setBanModal } = globalActions
 
   const menuItems = [
     { href: '/', label: 'Home' },
@@ -55,12 +61,12 @@ const NavBtn: React.FC<{ donationId?: number; owner?: string }> = ({ donationId,
               </Menu.Item>
             ))}
 
-            {donationId && address === owner && (
+            {charity && address === charity.owner && (
               <>
                 <Menu.Item>
                   {({ active }) => (
                     <Link
-                      href={'/donations/edit/' + donationId}
+                      href={'/donations/edit/' + charity.id}
                       className={`flex justify-start items-center bg-white space-x-1 ${
                         active ? 'text-white bg-green-600' : 'text-black'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm
@@ -85,6 +91,22 @@ const NavBtn: React.FC<{ donationId?: number; owner?: string }> = ({ donationId,
                   )}
                 </Menu.Item>
               </>
+            )}
+
+            {charity && address === admin && (
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    onClick={() => dispatch(setBanModal('scale-100'))}
+                    className={`flex justify-start items-center bg-white space-x-1 ${
+                      active ? 'text-white bg-red-600' : 'text-red-600'
+                    } group flex w-full items-center rounded-md px-2 py-2 text-sm
+                  hover:bg-red-600 hover:text-white`}
+                  >
+                    <span>Ban Charity</span>
+                  </button>
+                )}
+              </Menu.Item>
             )}
           </Menu.Items>
         </>
