@@ -1,7 +1,7 @@
 import Banner from '@/components/Banner'
 import Cards from '@/components/Cards'
 import NavBtn from '@/components/NavBtn'
-import { generateCharities } from '@/utils/fakeData'
+import { getMyCharities } from '@/services/blockchain'
 import { CharityStruct } from '@/utils/type.dt'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -12,7 +12,7 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     const fetchCharities = async () => {
-      const charitiesData: CharityStruct[] = generateCharities(5)
+      const charitiesData: CharityStruct[] = await getMyCharities()
       setCharities(charitiesData)
     }
 

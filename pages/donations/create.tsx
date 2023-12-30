@@ -1,4 +1,5 @@
 import NavBtn from '@/components/NavBtn'
+import { createCharity } from '@/services/blockchain'
 import { CharityParams } from '@/utils/type.dt'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -41,8 +42,13 @@ const Page: NextPage = () => {
 
     await toast.promise(
       new Promise<void>((resolve, reject) => {
-        console.log(charity)
-        resolve()
+        createCharity(charity)
+          .then((tx) => {
+            console.log(tx)
+            resetForm()
+            resolve(tx)
+          })
+          .catch((error) => reject(error))
       }),
       {
         pending: 'Approve transaction...',
@@ -131,7 +137,7 @@ const Page: NextPage = () => {
                   type="text"
                   name="image"
                   placeholder="Image URL"
-                  pattern="https?://.+(\.png|\.jpg|\.jpeg|\.gif)"
+                  pattern="https?://.+(\.(jpg|png|gif))?$"
                   title="Please enter a valid image URL (http(s)://...(.png|.jpg|.jpeg|.gif))"
                   required
                   value={charity.image}

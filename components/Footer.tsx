@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
   return (
     <>
       <div className="border-t border-gray-300 py-5 my-10">
-        <div className="lg:w-2/3 w-full mx-auto px-5">
+        <div className="lg:w-4/5 w-full mx-auto px-5">
           <div
             className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4
         justify-items-start items-start"
@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="border-t border-gray-300 py-5 my-10">
-        <div className="lg:w-2/3 w-full mx-auto px-5">
+        <div className="lg:w-4/5 w-full mx-auto px-5">
           <div
             className="flex flex-col sm:flex-row
             justify-center sm:justify-between"

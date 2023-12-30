@@ -1,5 +1,5 @@
 import NavBtn from '@/components/NavBtn'
-import { generateCharities } from '@/utils/fakeData'
+import { getCharity, updateCharity } from '@/services/blockchain'
 import { CharityParams, CharityStruct } from '@/utils/type.dt'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import Head from 'next/head'
@@ -12,7 +12,6 @@ const Page: NextPage<{ charityData: CharityStruct }> = ({ charityData }) => {
   const { address } = useAccount()
   const [charity, setCharity] = useState<CharityParams>(charityData)
   const router = useRouter()
-  const { id } = router.query
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -38,8 +37,13 @@ const Page: NextPage<{ charityData: CharityStruct }> = ({ charityData }) => {
 
     await toast.promise(
       new Promise<void>((resolve, reject) => {
-        console.log(charity)
-        resolve()
+        updateCharity(charity)
+          .then((tx) => {
+            console.log(tx)
+            router.push('/donations/' + charity.id)
+            resolve(tx)
+          })
+          .catch((error) => reject(error))
       }),
       {
         pending: 'Approve transaction...',
@@ -117,7 +121,7 @@ const Page: NextPage<{ charityData: CharityStruct }> = ({ charityData }) => {
                   type="text"
                   name="image"
                   placeholder="Image URL"
-                  pattern="https?://.+(\.png|\.jpg|\.jpeg|\.gif)"
+                  pattern="https?://.+(\.(jpg|png|gif))?$"
                   title="Please enter a valid image URL (http(s)://...(.png|.jpg|.jpeg|.gif))"
                   required
                   value={charity.image}
@@ -178,7 +182,7 @@ export default Page
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { id } = context.query
 
-  const charityData: CharityStruct = generateCharities(Number(id))[0]
+  const charityData: CharityStruct = await getCharity(Number(id))
   return {
     props: {
       charityData: JSON.parse(JSON.stringify(charityData)),
