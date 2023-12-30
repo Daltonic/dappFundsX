@@ -103,6 +103,42 @@ const updateCharity = async (charity: CharityParams): Promise<void> => {
   }
 }
 
+const deleteCharity = async (id: number): Promise<void> => {
+  if (!ethereum) {
+    reportError('Please install a browser provider')
+    return Promise.reject(new Error('Browser provider not installed'))
+  }
+
+  try {
+    const contract = await getEthereumContracts()
+    tx = await contract.deleteCharity(id)
+    await tx.wait()
+
+    return Promise.resolve(tx)
+  } catch (error) {
+    reportError(error)
+    return Promise.reject(error)
+  }
+}
+
+const banCharity = async (id: number): Promise<void> => {
+  if (!ethereum) {
+    reportError('Please install a browser provider')
+    return Promise.reject(new Error('Browser provider not installed'))
+  }
+
+  try {
+    const contract = await getEthereumContracts()
+    tx = await contract.toggleBan(id)
+    await tx.wait()
+
+    return Promise.resolve(tx)
+  } catch (error) {
+    reportError(error)
+    return Promise.reject(error)
+  }
+}
+
 const structuredCharities = (charities: CharityStruct[]): CharityStruct[] =>
   charities
     .map((charity) => ({
@@ -135,4 +171,13 @@ const structuredSupporters = (supports: SupportStruct[]): SupportStruct[] =>
     }))
     .sort((a, b) => b.timestamp - a.timestamp)
 
-export { getCharities, getMyCharities, getCharity, getSupporters, createCharity, updateCharity }
+export {
+  getCharities,
+  getMyCharities,
+  getCharity,
+  getSupporters,
+  createCharity,
+  updateCharity,
+  deleteCharity,
+  banCharity,
+}

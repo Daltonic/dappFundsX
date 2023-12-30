@@ -3,9 +3,13 @@ import { HiChevronDown } from 'react-icons/hi'
 import { Menu } from '@headlessui/react'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
+import { globalActions } from '@/store/globalSlices'
+import { useDispatch } from 'react-redux'
 
 const NavBtn: React.FC<{ donationId?: number; owner?: string }> = ({ donationId, owner }) => {
   const { address } = useAccount()
+  const dispatch = useDispatch()
+  const { setDeleteModal } = globalActions
 
   const menuItems = [
     { href: '/', label: 'Home' },
@@ -70,6 +74,7 @@ const NavBtn: React.FC<{ donationId?: number; owner?: string }> = ({ donationId,
                 <Menu.Item>
                   {({ active }) => (
                     <button
+                      onClick={() => dispatch(setDeleteModal('scale-100'))}
                       className={`flex justify-start items-center bg-white space-x-1 ${
                         active ? 'text-white bg-red-600' : 'text-red-600'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm
