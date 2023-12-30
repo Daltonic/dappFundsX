@@ -42,7 +42,7 @@ const Ban: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
       className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center
     bg-black bg-opacity-50 transform z-[3000] transition-transform duration-300 ${banModal}`}
     >
-      <div className="bg-white shadow-lg shadow-slate-900 rounded-xl w-11/12 md:w-1/5 h-7/12 p-6">
+      <div className="bg-white shadow-lg shadow-slate-900 rounded-xl w-11/12 md:w-2/5 h-7/12 p-6">
         <div className="flex flex-col space-y-2">
           <div className="flex flex-row justify-between items-center">
             <p className="font-medium text-2xl">Ban Campaign</p>

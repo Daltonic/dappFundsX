@@ -2,7 +2,8 @@ import React from 'react'
 import Donation from './Donation'
 import { FaBan, FaEthereum } from 'react-icons/fa'
 import { CharityStruct, SupportStruct } from '@/utils/type.dt'
-import { useAccount } from 'wagmi'
+import { useDispatch } from 'react-redux'
+import { globalActions } from '@/store/globalSlices'
 
 interface ComponentProp {
   charity: CharityStruct
@@ -10,7 +11,8 @@ interface ComponentProp {
 }
 
 const Payment: React.FC<ComponentProp> = ({ charity, supports }) => {
-  const { address } = useAccount()
+  const dispatch = useDispatch()
+  const { setDonorsModal, setSupportModal } = globalActions
 
   return (
     <div
@@ -46,6 +48,7 @@ const Payment: React.FC<ComponentProp> = ({ charity, supports }) => {
         </button>
         {!charity.banned ? (
           <button
+            onClick={() => dispatch(setDonorsModal('scale-100'))}
             className="bg-amber-500 py-3 px-20 rounded-xl
           transition-all duration-300 ease-in-out
           hover:bg-amber-400"
@@ -72,6 +75,7 @@ const Payment: React.FC<ComponentProp> = ({ charity, supports }) => {
 
       <div className="flex justify-start items-center space-x-4">
         <button
+          onClick={() => dispatch(setSupportModal('scale-100'))}
           className="border border-gray-300 py-2 px-4 rounded-lg font-medium
           transition-all duration-300 ease-in-out
          hover:bg-gray-100"
@@ -79,6 +83,7 @@ const Payment: React.FC<ComponentProp> = ({ charity, supports }) => {
           See all
         </button>
         <button
+          onClick={() => dispatch(setSupportModal('scale-100'))}
           className="border border-gray-300 py-2 px-4 rounded-lg font-medium
           transition-all duration-300 ease-in-out
          hover:bg-gray-100"

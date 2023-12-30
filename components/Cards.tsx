@@ -23,7 +23,9 @@ const Cards: React.FC<{ charities: CharityStruct[] }> = ({ charities }) => {
 const Card: React.FC<{ charity: CharityStruct }> = ({ charity }) => {
   return (
     <div className="shadow flex flex-col w-80 bg-gray-50 rounded-lg overflow-hidden">
-      <img src={charity.image} alt={charity.name} />
+      <Link href={'/donations/' + charity.id}>
+        <img className="w-full h-56 object-cover" src={charity.image} alt={charity.name} />
+      </Link>
       <div className="p-5 space-y-8">
         <div>
           <h4 className="text-xl font-medium capitalize mb-1">{charity.name}</h4>

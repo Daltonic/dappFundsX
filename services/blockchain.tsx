@@ -1,7 +1,9 @@
 import { ethers } from 'ethers'
 import address from '@/contracts/contractAddress.json'
 import abi from '@/artifacts/contracts/DappFundX.sol/DappFundX.json'
-import { CharityParams, CharityStruct, SupportStruct } from '@/utils/type.dt'
+import { CharityParams, CharityStruct, DonorParams, SupportStruct } from '@/utils/type.dt'
+import { globalActions } from '@/store/globalSlices'
+import { store } from '@/store'
 
 const toWei = (num: number) => ethers.parseEther(num.toString())
 const fromWei = (num: number) => ethers.formatEther(num)
@@ -10,6 +12,7 @@ let ethereum: any
 let tx: any
 
 if (typeof window !== 'undefined') ethereum = (window as any).ethereum
+const { setSupports, setCharity } = globalActions
 
 const getEthereumContracts = async () => {
   const accounts = await ethereum?.request?.({ method: 'eth_accounts' })
@@ -145,6 +148,32 @@ const banCharity = async (id: number): Promise<void> => {
   }
 }
 
+const makeDonation = async (donation: DonorParams): Promise<void> => {
+  if (!ethereum) {
+    reportError('Please install a browser provider')
+    return Promise.reject(new Error('Browser provider not installed'))
+  }
+
+  try {
+    const contract = await getEthereumContracts()
+    tx = await contract.donate(donation.id, donation.fullname, donation.comment, {
+      value: toWei(Number(donation.amount)),
+    })
+    await tx.wait()
+
+    const supporters = await getSupporters(Number(donation.id))
+    store.dispatch(setSupports(supporters))
+
+    const charity = await getCharity(Number(donation.id))
+    store.dispatch(setCharity(charity))
+
+    return Promise.resolve(tx)
+  } catch (error) {
+    reportError(error)
+    return Promise.reject(error)
+  }
+}
+
 const structuredCharities = (charities: CharityStruct[]): CharityStruct[] =>
   charities
     .map((charity) => ({
@@ -187,4 +216,5 @@ export {
   deleteCharity,
   banCharity,
   getAdmin,
+  makeDonation,
 }
