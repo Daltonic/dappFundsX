@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { CharityStruct } from '@/utils/type.dt'
 
 interface PageProp {
-  charity: CharityStruct
+  charity?: CharityStruct
   admin?: string
 }
 

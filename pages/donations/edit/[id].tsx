@@ -172,7 +172,7 @@ const Page: NextPage<{ charityData: CharityStruct }> = ({ charityData }) => {
       <div className="h-10"></div>
       <div className="h-10"></div>
 
-      <NavBtn />
+      <NavBtn charity={charityData} />
     </div>
   )
 }
